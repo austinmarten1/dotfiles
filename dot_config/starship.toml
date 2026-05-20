@@ -1,0 +1,116 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+palette = "catppuccin_mocha"
+format = "$username$hostname$directory$git_branch$git_status$nodejs$python$rust$golang$lua$terraform$cmd_duration$fill[❯](overlay)\n$character"
+
+[palettes.catppuccin_mocha]
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext = "#a6adc8"
+overlay = "#6c7086"
+orange = "#fab387"
+cyan = "#94e2d5"
+purple = "#cba6f7"
+white = "#cdd6f4"
+
+[character]
+success_symbol = "[❯](bold green) "
+error_symbol = "[❯](bold red) "
+vimcmd_symbol = "[❮](bold mauve) "
+
+[fill]
+symbol = " "
+
+[username]
+show_always = true
+style_user = "bold pink"
+format = "\\[[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold mauve"
+format = "@[$hostname]($style)\\]: "
+
+[directory]
+style = "bold sky"
+truncation_length = 4
+truncation_symbol = "…/"
+home_symbol = "~"
+read_only = " ro"
+
+[git_branch]
+symbol = " "
+style = "bold peach"
+
+[git_status]
+style = "yellow"
+
+[nodejs]
+symbol = " "
+style = "green"
+version_format = "v${major}.${minor}"
+detect_files = ["package.json", "package-lock.json", "yarn.lock"]
+detect_folders = ["node_modules"]
+detect_extensions = []
+
+[python]
+symbol = " "
+style = "blue"
+version_format = "${major}.${minor}"
+
+[rust]
+symbol = " "
+style = "red"
+version_format = "${major}.${minor}"
+
+[golang]
+symbol = " "
+style = "teal"
+version_format = "${major}.${minor}"
+
+[lua]
+symbol = " "
+style = "lavender"
+version_format = "${major}.${minor}"
+
+[terraform]
+symbol = "󱁢 "
+style = "mauve"
+version_format = "${major}.${minor}"
+
+[cmd_duration]
+format = " [took $duration]($style)"
+style = "italic overlay"
+min_time = 2000
+
+[time]
+disabled = true
+time_format = "%H:%M"
+style = "subtext"
+format = "[$time]($style) "
+
+[battery]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[package]
+disabled = true
