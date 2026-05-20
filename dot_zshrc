@@ -1,0 +1,5 @@
+for conf in "$HOME"/.config/zsh/[0-9]*-*.zsh(N); do
+    source "$conf"
+done
+
+[[ -f "$HOME/.config/zsh/secrets.zsh" ]] && source "$HOME/.config/zsh/secrets.zsh"
