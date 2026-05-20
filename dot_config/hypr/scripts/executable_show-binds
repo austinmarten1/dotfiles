@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+CONF="$HOME/.config/hypr/config/keybinds.conf"
+
+in_submap=0
+workspace_sw_done=0
+workspace_mv_done=0
+current_section=""
+
+output_line() {
+    # combo | desc
+    local combo="$1" desc="$2"
+    printf "%s\t%s\n" "$combo" "$desc"
+}
+
+normalize_mod() {
+    local mod="$1"
+    mod="${mod//\$mainMod/SUPER}"
+    mod="${mod// ALT/ + ALT}"
+    mod="${mod// CTRL/ + CTRL}"
+    mod="${mod// SHIFT/ + SHIFT}"
+    mod="${mod#"${mod%%[! ]*}"}"
+    mod="${mod%"${mod##*[! ]}"}"
+    echo "$mod"
+}
+
+while IFS= read -r line; do
+    if [[ "$line" =~ ^submap\ *=\ *resize ]]; then
+        in_submap=1; continue; fi
+    if [[ "$line" =~ ^submap\ *=\ *reset ]]; then
+        in_submap=0; continue; fi
+    [[ "$in_submap" -eq 1 ]] && continue
+    [[ "$line" =~ ^(#\ =|$|source|binds|}) ]] && continue
+
+    if [[ "$line" =~ ^#\ =+\ (.+)\ =+$ ]]; then
+        workspace_sw_done=0
+        workspace_mv_done=0
+        current_section="${BASH_REMATCH[1]}"
+        output_line "── ${current_section} ──" ""
+        continue
+    fi
+
+    if [[ "$line" =~ ^bindd\ *=\ *([^,]+),\ *([^,]+),\ *([^,]+), ]]; then
+        mod="$(normalize_mod "${BASH_REMATCH[1]}")"
+        key="${BASH_REMATCH[2]# }"; key="${key% }"; key="${key^^}"
+        desc="${BASH_REMATCH[3]# }"; desc="${desc% }"
+
+        if [[ "$desc" =~ ^Switch\ to\ workspace\ [0-9]+ ]]; then
+            [[ "$workspace_sw_done" -eq 0 ]] && output_line "SUPER + 1-0" "Switch to workspace 1-10"
+            workspace_sw_done=1; continue
+        fi
+        if [[ "$desc" =~ ^Move\ window\ and\ switch\ to\ workspace\ [0-9]+ ]]; then
+            [[ "$workspace_mv_done" -eq 0 ]] && output_line "SUPER + CTRL + 1-0" "Move window to workspace 1-10"
+            workspace_mv_done=1; continue
+        fi
+
+        [[ -n "$mod" ]] && combo="${mod} + ${key}" || combo="${key}"
+        output_line "$combo" "$desc"
+    fi
+
+    if [[ "$line" =~ ^bindel\ *=\ *([^,]+),\ *([^,]+),.*#(.+)$ ]]; then
+        mod="$(normalize_mod "${BASH_REMATCH[1]}")"
+        key="${BASH_REMATCH[2]# }"; key="${key% }"; key="${key^^}"
+        desc="${BASH_REMATCH[3]# }"
+        [[ -n "$mod" ]] && combo="${mod} + ${key}" || combo="${key}"
+        output_line "$combo" "$desc"
+    fi
+
+done < "$CONF"
