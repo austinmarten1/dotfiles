@@ -1,0 +1,24 @@
+return {
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
+  },
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    keys = { "<C-t>" },
+    config = function()
+      require("toggleterm").setup({
+        open_mapping = "<C-t>",
+        direction = "vertical",
+        size = 60,
+        shell = vim.o.shell,
+      })
+    end,
+  },
+}
