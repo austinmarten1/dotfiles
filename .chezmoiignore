@@ -1,2 +1,5 @@
 .config/hypr/config/monitors-local.conf
 .config/zsh/secrets.zsh
+.config/nvim/backup
+.config/nvim/swap
+.config/nvim/undo
