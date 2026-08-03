@@ -14,6 +14,7 @@ return {
       })
 
       wk.add({
+        { "<leader>a", group = "ai" },
         { "<leader>b", group = "base64" },
         { "<leader>c", group = "code" },
         { "<leader>f", group = "find" },

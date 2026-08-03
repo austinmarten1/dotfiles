@@ -1,36 +1,31 @@
 local c = require("config.colors")
 
+hl.plugin.load("/usr/lib/libhyprbars.so")
+
+hl.plugin.hyprbars.add_button({
+    bg_color = c.mauve,
+    fg_color = c.base,
+    size = 10,
+    icon = "",
+    action = "close",
+})
+
 hl.config({
     plugin = {
         hyprbars = {
-            round_tb                   = true,
-            bar_height                 = 28,
-            shadow_size                = 0,
-            shadow_render_behind_text  = true,
-
+            bar_color = c.surface0,
             col = {
-                bar_all      = c.surface0,
-                text_all     = c.text,
-                buttons      = c.surface1,
-                button_active = c.mauve,
-                button_pressed = c.mauve,
-                keynetsplit  = c.mantle,
+                text = c.text,
             },
-
-            font_family = "JetBrainsMono Nerd Font",
-
-            buttons = {
-                active_only    = true,
-                del            = "",
-                fullscreen     = "",
-                minimize       = "",
-                close          = "",
-                maximize       = "",
-                hide           = "",
-            },
+            inactive_button_color = c.mauve,
+            bar_height = 28,
+            enabled = true,
+            bar_text_font = "JetBrainsMono Nerd Font",
         },
     },
+})
 
+hl.config({
     decoration = {
         rounding = 10,
         blur = {
