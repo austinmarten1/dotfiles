@@ -80,8 +80,15 @@ opt.tabstop = 4
 opt.smarttab = true
 opt.listchars = { tab = ">-", trail = "-", nbsp = "_" }
 opt.list = true
-opt.spell = true
 opt.whichwrap:append("<,>,h,l,[,]")
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "text", "gitcommit" },
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+  desc = "Spellcheck prose filetypes only",
+})
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "yaml",

@@ -36,32 +36,6 @@ vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", {
   desc = "Toggle undotree",
 })
 
-vim.keymap.set("n", "<leader>ff", function()
-  require("telescope.builtin").find_files()
-end, {
-  desc = "Find files",
-})
-vim.keymap.set("n", "<leader>fg", function()
-  require("telescope.builtin").live_grep()
-end, {
-  desc = "Live grep",
-})
-vim.keymap.set("n", "<leader>fb", function()
-  require("telescope.builtin").buffers()
-end, {
-  desc = "Find buffers",
-})
-vim.keymap.set("n", "<leader>fh", function()
-  require("telescope.builtin").help_tags()
-end, {
-  desc = "Help tags",
-})
-vim.keymap.set("n", "<leader>fr", function()
-  require("telescope.builtin").oldfiles()
-end, {
-  desc = "Recent files",
-})
-
 vim.keymap.set("n", "]d", function()
   vim.diagnostic.jump({ count = 1, float = true })
 end, {
