@@ -1,5 +1,28 @@
+# Machine-specific
 .config/hypr/config/monitors-local.conf
+.config/hypr/config/monitors-local.lua
+
+# Secrets
 .config/zsh/secrets.zsh
+**/*.tfvars
+**/*.tfstate
+**/*.tfstate.*
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/id_rsa
+**/id_ed25519
+**/.netrc
+**/.pgpass
+**/kubeconfig
+**/*.kubeconfig
+**/*secret*
+**/*credential*
+
+# Editor state
 .config/nvim/backup
 .config/nvim/swap
 .config/nvim/undo

@@ -1,3 +1,4 @@
 #!/usr/bin/bash
-grimblast copy output || exit
+set -o pipefail
+grim -o "$(hyprctl -j monitors | jq -r '.[] | select(.focused) | .name')" - | wl-copy -t image/png || exit
 notify-send "Screenshot copied to clipboard"

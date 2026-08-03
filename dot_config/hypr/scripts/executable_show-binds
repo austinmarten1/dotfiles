@@ -1,69 +1,33 @@
 #!/usr/bin/env bash
 
-CONF="$HOME/.config/hypr/config/keybinds.conf"
+hyprctl binds | awk '
+    function flush() {
+        if (key == "" || desc == "" || submap != "") { return }
 
-in_submap=0
-workspace_sw_done=0
-workspace_mv_done=0
-current_section=""
+        if (desc ~ /^Switch to workspace [0-9]+$/) {
+            if (!ws_switch++) { printf "SUPER + 1-0\tSwitch to workspace 1-10\n" }
+            return
+        }
+        if (desc ~ /^Move window and switch to workspace [0-9]+$/) {
+            if (!ws_move++) { printf "SUPER + CTRL + 1-0\tMove window to workspace 1-10\n" }
+            return
+        }
 
-output_line() {
-    # combo | desc
-    local combo="$1" desc="$2"
-    printf "%s\t%s\n" "$combo" "$desc"
-}
+        combo = ""
+        if (int(modmask) % 128 >= 64) { combo = combo "SUPER + " }
+        if (int(modmask) % 16  >= 8)  { combo = combo "ALT + " }
+        if (int(modmask) % 8   >= 4)  { combo = combo "CTRL + " }
+        if (int(modmask) % 2   >= 1)  { combo = combo "SHIFT + " }
 
-normalize_mod() {
-    local mod="$1"
-    mod="${mod//\$mainMod/SUPER}"
-    mod="${mod// ALT/ + ALT}"
-    mod="${mod// CTRL/ + CTRL}"
-    mod="${mod// SHIFT/ + SHIFT}"
-    mod="${mod#"${mod%%[! ]*}"}"
-    mod="${mod%"${mod##*[! ]}"}"
-    echo "$mod"
-}
+        printf "%s%s\t%s\n", combo, toupper(key), desc
+    }
 
-while IFS= read -r line; do
-    if [[ "$line" =~ ^submap\ *=\ *resize ]]; then
-        in_submap=1; continue; fi
-    if [[ "$line" =~ ^submap\ *=\ *reset ]]; then
-        in_submap=0; continue; fi
-    [[ "$in_submap" -eq 1 ]] && continue
-    [[ "$line" =~ ^(#\ =|$|source|binds|}) ]] && continue
+    /^bind/ { flush(); modmask = ""; key = ""; desc = ""; submap = ""; next }
 
-    if [[ "$line" =~ ^#\ =+\ (.+)\ =+$ ]]; then
-        workspace_sw_done=0
-        workspace_mv_done=0
-        current_section="${BASH_REMATCH[1]}"
-        output_line "── ${current_section} ──" ""
-        continue
-    fi
+    /^[ \t]*modmask:/     { modmask = $2; next }
+    /^[ \t]*key:/         { key = $2; next }
+    /^[ \t]*submap:/      { sub(/^[ \t]*submap:[ \t]*/, ""); submap = $0; next }
+    /^[ \t]*description:/ { sub(/^[ \t]*description:[ \t]*/, ""); desc = $0; next }
 
-    if [[ "$line" =~ ^bindd\ *=\ *([^,]+),\ *([^,]+),\ *([^,]+), ]]; then
-        mod="$(normalize_mod "${BASH_REMATCH[1]}")"
-        key="${BASH_REMATCH[2]# }"; key="${key% }"; key="${key^^}"
-        desc="${BASH_REMATCH[3]# }"; desc="${desc% }"
-
-        if [[ "$desc" =~ ^Switch\ to\ workspace\ [0-9]+ ]]; then
-            [[ "$workspace_sw_done" -eq 0 ]] && output_line "SUPER + 1-0" "Switch to workspace 1-10"
-            workspace_sw_done=1; continue
-        fi
-        if [[ "$desc" =~ ^Move\ window\ and\ switch\ to\ workspace\ [0-9]+ ]]; then
-            [[ "$workspace_mv_done" -eq 0 ]] && output_line "SUPER + CTRL + 1-0" "Move window to workspace 1-10"
-            workspace_mv_done=1; continue
-        fi
-
-        [[ -n "$mod" ]] && combo="${mod} + ${key}" || combo="${key}"
-        output_line "$combo" "$desc"
-    fi
-
-    if [[ "$line" =~ ^bindel\ *=\ *([^,]+),\ *([^,]+),.*#(.+)$ ]]; then
-        mod="$(normalize_mod "${BASH_REMATCH[1]}")"
-        key="${BASH_REMATCH[2]# }"; key="${key% }"; key="${key^^}"
-        desc="${BASH_REMATCH[3]# }"
-        [[ -n "$mod" ]] && combo="${mod} + ${key}" || combo="${key}"
-        output_line "$combo" "$desc"
-    fi
-
-done < "$CONF"
+    END { flush() }
+'

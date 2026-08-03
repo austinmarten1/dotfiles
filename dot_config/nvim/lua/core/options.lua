@@ -36,6 +36,46 @@ opt.backupdir = vim.fn.expand("~/.config/nvim/backup//")
 opt.directory = vim.fn.expand("~/.config/nvim/swap//")
 opt.undodir = vim.fn.expand("~/.config/nvim/undo//")
 
+local secret_patterns = {
+  "*.tfvars",
+  "*.tfvars.json",
+  "*.tfstate",
+  "*.tfstate.*",
+  "*.env",
+  ".env",
+  ".env.*",
+  "*.pem",
+  "*.key",
+  "*.p12",
+  "*.pfx",
+  "id_rsa",
+  "id_ed25519",
+  "*secret*",
+  "*credential*",
+  ".netrc",
+  ".pgpass",
+  "*.kubeconfig",
+  "kubeconfig",
+  "secrets.zsh",
+}
+
+opt.backupskip:append(secret_patterns)
+
+vim.api.nvim_create_autocmd({
+  "BufReadPre",
+  "BufNewFile",
+}, {
+  pattern = secret_patterns,
+  callback = function()
+    vim.opt_local.backup = false
+    vim.opt_local.writebackup = false
+    vim.opt_local.swapfile = false
+    vim.opt_local.undofile = false
+    vim.opt_local.shada = ""
+  end,
+  desc = "Disable on-disk persistence for secret-bearing files",
+})
+
 opt.smartindent = true
 opt.shiftwidth = 4
 opt.expandtab = true
