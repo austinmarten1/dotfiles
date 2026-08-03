@@ -145,7 +145,7 @@ end
 local layerAnims = {
     { namespace = "logout_dialog", animation = "slide top" },
     { namespace = "waybar",        animation = "slide down" },
-    { namespace = "quickshell",    animation = "slide down" },
+
     { namespace = "wallpaper",     animation = "fade 50%" },
 }
 for _, l in ipairs(layerAnims) do
