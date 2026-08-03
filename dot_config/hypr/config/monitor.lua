@@ -1,4 +1,4 @@
-require("config.monitors-local")
+pcall(require, "config.monitors-local")
 
 -- Fallback for any unlisted monitor
 hl.monitor({
