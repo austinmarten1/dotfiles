@@ -7,7 +7,7 @@ return {
     },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "pyright", "ts_ls", "bashls", "html", "cssls", "jsonls", "yamlls", "marksman" }
+      local servers = { "lua_ls", "pyright", "ts_ls", "bashls", "html", "cssls", "jsonls", "yamlls", "marksman" }
       for _, lsp in ipairs(servers) do
         vim.lsp.config(lsp, { capabilities = capabilities })
       end

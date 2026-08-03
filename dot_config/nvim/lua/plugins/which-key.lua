@@ -14,7 +14,7 @@ return {
       })
 
       wk.add({
-        { "<leader>f",  group = "find/format" },
+        { "<leader>f",  group = "find" },
         { "<leader>h",  group = "hunks" },
         { "<leader>x", group = "diagnostics" },
         { "<leader>c", group = "code" },
@@ -35,6 +35,7 @@ return {
         { "<leader>xX", desc = "Buffer diagnostics" },
 
         { "<leader>ca", desc = "Code action" },
+        { "<leader>cf", desc = "Format buffer", mode = { "n", "v" } },
         { "<leader>rn", desc = "Rename symbol" },
         { "gd",         desc = "Go to definition" },
         { "gr",         desc = "Go to references" },
@@ -42,8 +43,6 @@ return {
 
         { "]d", desc = "Next diagnostic" },
         { "[d", desc = "Prev diagnostic" },
-
-        { "<leader>f",  desc = "Format buffer", mode = { "n", "v" } },
 
         { "]h",          desc = "Next hunk" },
         { "[h",          desc = "Prev hunk" },

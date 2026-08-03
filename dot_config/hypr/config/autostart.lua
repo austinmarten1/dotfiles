@@ -2,7 +2,7 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprctl output create headless && systemctl --user restart sunshine")
     hl.exec_cmd("~/.config/hypr/scripts/set-wallpaper")
-    hl.exec_cmd("env QT_QPA_PLATFORMTHEME=gtk3 quickshell")
+    hl.exec_cmd("waybar")
     hl.exec_cmd("nm-applet --indicator")
     hl.exec_cmd("udiskie")
     hl.exec_cmd("systemctl --user import-environment")

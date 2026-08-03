@@ -101,8 +101,8 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), {
 hl.bind(mainMod .. " + ALT + CTRL + L", hl.dsp.exec_cmd("hyprlock"), {
     description = "Lock the screen",
 })
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("killall quickshell; sleep 0.3 && env QT_QPA_PLATFORMTHEME=gtk3 quickshell &"), {
-    description = "Reload/restarts Quickshell",
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("killall waybar; sleep 0.3 && waybar &"), {
+    description = "Reload/restarts Waybar",
 })
 
 -- Focus / move active window by direction

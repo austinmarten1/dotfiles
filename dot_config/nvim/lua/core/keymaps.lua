@@ -62,15 +62,19 @@ end, {
   desc = "Recent files",
 })
 
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {
+vim.keymap.set("n", "]d", function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end, {
   desc = "Next diagnostic",
 })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {
+vim.keymap.set("n", "[d", function()
+  vim.diagnostic.jump({ count = -1, float = true })
+end, {
   desc = "Prev diagnostic",
 })
 
 vim.keymap.set("n", "<leader>be", function()
-  vim.fn.setreg("a", vim.fn.system('echo -n "' .. vim.fn.getreg("0") .. '" | base64'))
+  vim.fn.setreg("a", vim.base64.encode(vim.fn.getreg("0")))
   print("Base64 encoded yank → register a")
 end, {
   desc = "Base64 encode last yank",
