@@ -3,3 +3,8 @@ for conf in "$HOME"/.config/zsh/[0-9]*-*.zsh(N); do
 done
 
 [[ -f "$HOME/.config/zsh/secrets.zsh" ]] && source "$HOME/.config/zsh/secrets.zsh"
+
+export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true
+export OPENCODE_ENABLE_EXA=1
+
+export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"

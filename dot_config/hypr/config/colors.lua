@@ -5,6 +5,7 @@ return {
     teal     = "rgba(94e2d5ff)",
     green    = "rgba(a6e3a1ff)",
     mauve    = "rgba(cba6f7ff)",
+    base     = "rgba(1e1e2eff)",
     surface0 = "rgba(313244ff)",
     surface1 = "rgba(45475aff)",
     mantle   = "rgba(181825ff)",

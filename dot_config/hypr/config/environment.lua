@@ -13,6 +13,8 @@ hl.env("SDL_VIDEODRIVER",            "wayland")
 hl.env("MOZ_DISABLE_RDD_SANDBOX",    "1")
 hl.env("EGL_PLATFORM",               "wayland")
 
+hl.env("SSH_AUTH_SOCK", os.getenv("HOME") .. "/.bitwarden-ssh-agent.sock", true)
+
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("QT_QPA_PLATFORMTHEME",         "qt6ct")
 hl.env("QT_QPA_PLATFORM",              "wayland")
