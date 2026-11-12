@@ -46,7 +46,7 @@ hl.config({
         swallow_regex         = "^(firefox|nautilus|nemo|thunar)$",
         focus_on_activate     = true,
         vrr                   = 2,
-        render_unfocused_fps  = 0,
+        render_unfocused_fps  = 1,
     },
 
     render = {
@@ -60,12 +60,10 @@ hl.config({
     },
 
     dwindle = {
-        special_scale_factor = 0.8,
         preserve_split       = true,
     },
 
     master = {
         new_status           = "master",
-        special_scale_factor = 0.8,
     },
 })

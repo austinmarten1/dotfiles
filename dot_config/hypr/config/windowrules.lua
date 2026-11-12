@@ -105,6 +105,23 @@ hl.window_rule({
     no_blur = true,
 })
 
+-- Steam games -> sunshine output (ws5). Games spawn as separate windows that
+-- don't inherit Big Picture's workspace, so without this they open on whatever
+-- monitor is focused. Pin them to ws5 (the headless sunshine output Sunshine
+-- captures) so Moonlight always streams the game. "silent" keeps the physical
+-- desktop's focus undisturbed; the window still lands on ws5.
+local gameRules = {
+    { name = "steam-games", match = { class = "^(steam_app_.*)$" } },
+    { name = "gamescope",   match = { class = "^(gamescope)$" } },
+}
+for _, r in ipairs(gameRules) do
+    hl.window_rule({
+        name      = r.name,
+        match     = r.match,
+        workspace = "5 silent",
+    })
+end
+
 -- Floating windows on tiled workspaces: accent border
 hl.window_rule({
     name  = "float-border",
@@ -157,3 +174,13 @@ for _, l in ipairs(layerAnims) do
         animation = l.animation,
     })
 end
+
+hl.workspace_rule({
+    workspace = "s[true]",
+    gaps_out  = {
+        top    = 144,
+        right  = 256,
+        bottom = 144,
+        left   = 256,
+    },
+})
